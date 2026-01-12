@@ -54,15 +54,30 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task<Customer> UpdateCustomerAsync(string customerId, Customer customer)
     {
-        // Ensure CustomerId matches
-        customer.CustomerId = customerId;
+        try
+        {
+            // Ensure CustomerId matches
+            customer.CustomerId = customerId;
 
-        var response = await _container.UpsertItemAsync(customer, new PartitionKey(customerId));
-        return response.Resource;
+            // Use ReplaceItemAsync to update only if exists
+            var response = await _container.ReplaceItemAsync(customer, customerId, new PartitionKey(customerId));
+            return response.Resource;
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            throw new KeyNotFoundException($"Customer with ID {customerId} not found.");
+        }
     }
 
     public async Task DeleteCustomerAsync(string customerId)
     {
-        await _container.DeleteItemAsync<Customer>(customerId, new PartitionKey(customerId));
+        try
+        {
+            await _container.DeleteItemAsync<Customer>(customerId, new PartitionKey(customerId));
+        }
+        catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            throw new KeyNotFoundException($"Customer with ID {customerId} not found.");
+        }
     }
 }

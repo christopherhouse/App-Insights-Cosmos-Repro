@@ -1,4 +1,4 @@
-@CosmosCustomerApi_HostAddress = http://localhost:5000
+@CosmosCustomerApi_HostAddress = http://localhost:5228
 
 ### Get all customers
 GET {{CosmosCustomerApi_HostAddress}}/api/customers

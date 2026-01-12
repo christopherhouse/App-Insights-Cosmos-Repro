@@ -70,8 +70,8 @@ dotnet run
 ```
 
 The API will be available at:
-- HTTP: `http://localhost:5000`
-- Swagger UI: `http://localhost:5000/swagger`
+- HTTP: `http://localhost:5228`
+- Swagger UI: `http://localhost:5228/swagger`
 
 ## Database Setup
 
