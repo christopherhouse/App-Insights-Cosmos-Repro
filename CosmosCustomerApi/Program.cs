@@ -20,7 +20,10 @@ var cosmosPrimaryKey = builder.Configuration["CosmosDb:PrimaryKey"];
 var databaseName = builder.Configuration["CosmosDb:DatabaseName"];
 var containerName = builder.Configuration["CosmosDb:ContainerName"];
 
-if (!string.IsNullOrEmpty(cosmosEndpointUri) && !string.IsNullOrEmpty(cosmosPrimaryKey))
+if (!string.IsNullOrEmpty(cosmosEndpointUri) && 
+    !string.IsNullOrEmpty(cosmosPrimaryKey) &&
+    !string.IsNullOrEmpty(databaseName) &&
+    !string.IsNullOrEmpty(containerName))
 {
     builder.Services.AddSingleton<CosmosClient>(serviceProvider =>
     {
@@ -30,7 +33,7 @@ if (!string.IsNullOrEmpty(cosmosEndpointUri) && !string.IsNullOrEmpty(cosmosPrim
     builder.Services.AddSingleton<ICosmosDbService>(serviceProvider =>
     {
         var cosmosClient = serviceProvider.GetRequiredService<CosmosClient>();
-        return new CosmosDbService(cosmosClient, databaseName!, containerName!);
+        return new CosmosDbService(cosmosClient, databaseName, containerName);
     });
 }
 

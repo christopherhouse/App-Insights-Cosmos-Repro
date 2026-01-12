@@ -42,7 +42,8 @@ public class CosmosDbService : ICosmosDbService
 
     public async Task<Customer> CreateCustomerAsync(Customer customer)
     {
-        // Ensure CustomerId is set and used as partition key
+        // Ensure CustomerId is set - if not provided, use the auto-generated Id
+        // This allows the same value to be used as both the document id and partition key
         if (string.IsNullOrEmpty(customer.CustomerId))
         {
             customer.CustomerId = customer.Id;
