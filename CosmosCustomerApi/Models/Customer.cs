@@ -29,7 +29,7 @@ public class Customer
     public DateTime? DateOfBirth { get; set; }
 
     [JsonProperty("accountCreatedDate")]
-    public DateTime AccountCreatedDate { get; set; } = DateTime.UtcNow;
+    public DateTime AccountCreatedDate { get; set; }
 
     [JsonProperty("isActive")]
     public bool IsActive { get; set; } = true;

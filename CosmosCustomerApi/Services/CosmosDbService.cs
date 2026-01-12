@@ -49,6 +49,12 @@ public class CosmosDbService : ICosmosDbService
             customer.CustomerId = customer.Id;
         }
 
+        // Set creation timestamp if not already set
+        if (customer.AccountCreatedDate == default(DateTime))
+        {
+            customer.AccountCreatedDate = DateTime.UtcNow;
+        }
+
         var response = await _container.CreateItemAsync(customer, new PartitionKey(customer.CustomerId));
         return response.Resource;
     }
@@ -57,7 +63,8 @@ public class CosmosDbService : ICosmosDbService
     {
         try
         {
-            // Ensure CustomerId matches
+            // Ensure both Id and CustomerId match for document consistency
+            customer.Id = customerId;
             customer.CustomerId = customerId;
 
             // Use ReplaceItemAsync to update only if exists
