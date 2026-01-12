@@ -1,0 +1,68 @@
+@CosmosCustomerApi_HostAddress = http://localhost:5228
+
+### Get all customers
+GET {{CosmosCustomerApi_HostAddress}}/api/customers
+Accept: application/json
+
+###
+
+### Get a specific customer
+GET {{CosmosCustomerApi_HostAddress}}/api/customers/your-customer-id
+Accept: application/json
+
+###
+
+### Create a new customer
+POST {{CosmosCustomerApi_HostAddress}}/api/customers
+Content-Type: application/json
+
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.doe@example.com",
+  "phoneNumber": "+1-555-0123",
+  "address": {
+    "street": "123 Main St",
+    "city": "Seattle",
+    "state": "WA",
+    "postalCode": "98101",
+    "country": "USA"
+  },
+  "dateOfBirth": "1985-06-15T00:00:00Z",
+  "isActive": true,
+  "loyaltyPoints": 100,
+  "totalOrderValue": 500.00
+}
+
+###
+
+### Update a customer
+PUT {{CosmosCustomerApi_HostAddress}}/api/customers/your-customer-id
+Content-Type: application/json
+
+{
+  "id": "your-customer-id",
+  "customerId": "your-customer-id",
+  "firstName": "John",
+  "lastName": "Doe",
+  "email": "john.updated@example.com",
+  "phoneNumber": "+1-555-0124",
+  "address": {
+    "street": "456 Oak Ave",
+    "city": "Seattle",
+    "state": "WA",
+    "postalCode": "98102",
+    "country": "USA"
+  },
+  "dateOfBirth": "1985-06-15T00:00:00Z",
+  "isActive": true,
+  "loyaltyPoints": 250,
+  "totalOrderValue": 1500.00
+}
+
+###
+
+### Delete a customer
+DELETE {{CosmosCustomerApi_HostAddress}}/api/customers/your-customer-id
+
+###
